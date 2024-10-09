@@ -6,6 +6,7 @@ import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import {Root} from "./root/Root";
 import {LoginRoutes} from "./login";
 import {MainRoutes} from "./main";
+import {QueryClientProvider, QueryClient} from "@tanstack/react-query";
 
 const router = createBrowserRouter(
   [
@@ -18,13 +19,17 @@ const router = createBrowserRouter(
   ]
 );
 
+const queryClient = new QueryClient();
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} fallbackElement={<Suspense/>}/>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} fallbackElement={<Suspense/>}/>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

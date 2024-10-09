@@ -5,6 +5,8 @@ import {Password} from "../components/Password";
 import {Email} from "../components/Email";
 import {LoginContainer, LoginTitle} from "../styled";
 import {LoginContext} from "../context/LoginContext";
+import {Error} from "../components/Error";
+import styled from "styled-components";
 
 export const Signup = () => {
   const {email, password, setIsFinished, setError} = useContext(LoginContext);
@@ -22,9 +24,24 @@ export const Signup = () => {
       <LoginTitle>Sign Up</LoginTitle>
       <Email/>
       <Password/>
+      <Error/>
       <Button type="submit" fullWidth variant="contained" onClick={onAction}>
         Sign up
       </Button>
+      <Container>
+        <Text>Already have an account?</Text>
+        <Link href="/login">Login</Link>
+      </Container>
     </LoginContainer>
   );
 };
+
+const Container = styled.div`
+	display: flex;
+	justify-content: center;
+	gap: 4px;
+`;
+
+const Text = styled.div``;
+
+const Link = styled.a``;

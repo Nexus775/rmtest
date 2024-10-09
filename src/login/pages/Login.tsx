@@ -6,6 +6,7 @@ import {Password} from "../components/Password";
 import {LoginContainer, LoginTitle} from "../styled";
 import styled from "styled-components";
 import {LoginContext} from "../context/LoginContext";
+import {Error} from "../components/Error";
 
 export const Login = () => {
   const {email, password, setIsFinished, setError} = useContext(LoginContext);
@@ -27,18 +28,19 @@ export const Login = () => {
         control={<Checkbox value="remember" color="primary"/>}
         label="Remember me"
       />
+      <Error/>
       <Button type="submit" fullWidth variant="contained" onClick={action}>
         Sign in
       </Button>
-      <SignupContainer>
+      <Container>
         <Text>Don't have an account?</Text>
         <Link href="/login/new">Sign up</Link>
-      </SignupContainer>
+      </Container>
     </LoginContainer>
   );
 };
 
-const SignupContainer = styled.div`
+const Container = styled.div`
 	display: flex;
 	justify-content: center;
 	gap: 4px;

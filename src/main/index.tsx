@@ -10,9 +10,27 @@ export const MainRoutes: readonly RouteObject[] = [
     children: [{
       path: "characters",
       lazy: async () => {
-        const {Characters} = await import("./Characters");
+        const {Characters} = await import("./pages/Characters");
         return {Component: Characters};
       },
+    }, {
+      path: "characters/:id",
+      lazy: async () => {
+        const {SingleCharacter} = await import("./pages/SingleCharacter");
+        return {Component: SingleCharacter};
+      },
+    }, {
+      path: "location/:id",
+      lazy: async () => {
+        const {Location} = await import("./pages/Location");
+        return {Component: Location};
+      }
+    }, {
+      path: "episode/:id",
+      lazy: async () => {
+        const {Episode} = await import("./pages/Episode");
+        return {Component: Episode};
+      }
     }]
   }
 ];

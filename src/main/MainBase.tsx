@@ -7,19 +7,31 @@ export const MainBase = () => {
   
   const navigate = useNavigate();
   
-  return hasUser ? <>
+  return hasUser ? <Container>
     <Header>
       <HeaderElement onClick={() => navigate("/main/characters")}>Characters</HeaderElement>
       <HeaderElement onClick={() => navigate("/login/logout")}>Logout</HeaderElement>
     </Header>
-    <Outlet/>
-  </> : <Navigate to="/login/logout"/>;
+    <Content id="maincontent">
+      <Outlet/>
+    </Content>
+  </Container> : <Navigate to="/login/logout"/>;
 };
+
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	overflow-y: hidden;
+
+	& > * {
+		padding: 16px;
+	}
+`;
 
 const Header = styled.div`
 	display: flex;
 	background-color: lightblue;
-	padding: 16px;
 	gap: 16px;
 `;
 
@@ -27,4 +39,13 @@ const HeaderElement = styled.div`
 	padding: 8px;
 	background-color: lightgreen;
 	cursor: pointer;
+`;
+
+const Content = styled.div`
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100% - 66px);
+	overflow-y: scroll;
+	overflow-x: hidden;
+	background-color: #ddd;
 `;

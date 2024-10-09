@@ -1,5 +1,5 @@
 import {initializeApp} from "firebase/app";
-import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword} from "firebase/auth";
+import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD8ZZb5TXEo6Qscj4ki8E5MKgS9MOXZSuo",
@@ -26,4 +26,7 @@ export const signin = (email: string, password: string) => signInWithEmailAndPas
 export const signup = (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password).then(resolveOnUpdate);
 export const signout = () => auth.signOut();
 
-
+export const getIdOfData = (url: string) => {
+  const parts = url.split("/");
+  return parts[parts.length - 1];
+}
