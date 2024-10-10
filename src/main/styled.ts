@@ -19,6 +19,16 @@ export const CharacterContainer = styled.div`
 	}
 `;
 
+export const SingleContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	width: 100%;
+	background-color: #fff;
+	padding: 16px 32px;
+	gap: 16px;
+`;
+
 export const CharacterStatus = styled.span<{ $status: ISingleCharacter["status"] }>`
 	color: ${({$status}) => $status === "Alive" ? "green" : $status === "Dead" ? "red" : "gray"};
 	font-weight: bold;

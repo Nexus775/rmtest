@@ -11,7 +11,7 @@ export const CharacterCard = ({character}: PropsWithChildren<{
   
   return (
     <CharacterContainer>
-      <ImageContainer onClick={() => navigate(`${character.id}`)}><Image src={character.image}/></ImageContainer>
+      <ImageContainer onClick={() => navigate(`/main/characters/${character.id}`)}><Image src={character.image}/></ImageContainer>
       <Name>{character.name} (<CharacterStatus $status={character.status}/>)</Name>
     </CharacterContainer>
   );

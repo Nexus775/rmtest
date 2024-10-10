@@ -26,10 +26,10 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} fallbackElement={<Suspense/>}/>
-    </QueryClientProvider>
-  </React.StrictMode>
+  //<React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <RouterProvider router={router} fallbackElement={<Suspense/>}/>
+  </QueryClientProvider>
+  //</React.StrictMode>
 );
 

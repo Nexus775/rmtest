@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import {useGetSingleCharacter} from "../hooks/useGetSingleCharacter";
 import {useParams} from "react-router";
-import {CharacterGender, CharacterStatus} from "../styled";
+import {CharacterGender, CharacterStatus, SingleContainer} from "../styled";
 import {useMemo} from "react";
 import {getIdOfData} from "../../utils";
 import {useNavigate} from "react-router-dom";
+import {LocationLink} from "../components/LocationLink";
 
 export const SingleCharacter = () => {
   const {id} = useParams();
@@ -15,8 +16,10 @@ export const SingleCharacter = () => {
   const originLink = useMemo(() => `../location/${getIdOfData(data?.origin?.url || "")}`, [data]);
   const locationLink = useMemo(() => `../location/${getIdOfData(data?.location?.url || "")}`, [data]);
   
+  const episodes = useMemo(() => data?.episode?.map((e) => getIdOfData(e)) || [], [data]);
+  
   return (
-    <Container>
+    <SingleContainer>
       {data ? (
         <>
           <Content>
@@ -26,8 +29,8 @@ export const SingleCharacter = () => {
               <Data>Species: {data?.species || "Unknown"}</Data>
               <Data>Gender: <CharacterGender $gender={data?.gender || "unknown"}/></Data>
               {data?.type ? <Data>Type: {data?.type}</Data> : undefined}
-              <Data>Origin: <Link onClick={() => navigate(originLink)}>{data?.origin?.name || "Unknown"}</Link></Data>
-              <Data>Location: <Link onClick={() => navigate(locationLink)}>{data?.location?.name || "Unknown"}</Link></Data>
+              <Data>Origin: <LocationLink text={data?.origin?.name} target={originLink}/></Data>
+              <Data>Location: <LocationLink text={data?.location?.name} target={locationLink}/></Data>
             </DataContent>
             <ImageContent>
               <ImageContainer>
@@ -36,25 +39,21 @@ export const SingleCharacter = () => {
             </ImageContent>
           </Content>
           <Separator/>
-          <Episodes>
+          <EpisodeContainer>
             <Data>Episodes:</Data>
-          
-          </Episodes>
+            <Episodes>
+              {episodes.map((episode) =>
+                <EpisodeElement key={episode} onClick={() => navigate(`../episode/${episode}`)}>
+                  {episode}
+                </EpisodeElement>
+              )}
+            </Episodes>
+          </EpisodeContainer>
         </>
       ) : undefined}
-    </Container>
+    </SingleContainer>
   );
 };
-
-const Container = styled.div`
-	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
-	width: 100%;
-	background-color: #fff;
-	padding: 16px 32px;
-	gap: 16px;
-`;
 
 const Content = styled.div`
 	display: flex;
@@ -112,6 +111,25 @@ const Link = styled.span`
 	text-decoration: underline;
 `;
 
-const Episodes = styled.div`
-
+const EpisodeContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 `;
+
+const Episodes = styled.div`
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 8px;
+`;
+
+const EpisodeElement = styled.div`
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
+	border: 1px solid #000;
+	border-radius: 50%;
+	text-align: center;
+	cursor: pointer;
+`

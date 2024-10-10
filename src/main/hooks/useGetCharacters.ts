@@ -13,18 +13,26 @@ export interface IAllCharacterResponse {
   results: ISingleCharacter[];
 }
 
-export const useGetCharacters = (page: number): ISingleCharacter[] => {
-  const {data} = useQuery<IAllCharacterResponse>(
+export const useGetCharacters = (page: number, filter: string): {
+  results: ISingleCharacter[];
+  noResults: boolean;
+} => {
+  const {data, isRefetching} = useQuery<IAllCharacterResponse>(
     {
       initialData: {
         results: [],
       } as any,
-      queryKey: [`characters-${page}`],
+      retry: false,
+      queryKey: [`characters-${page}${filter ? `-${filter}` : ""}`],
       queryFn: async () =>
-        axios.get(`https://rickandmortyapi.com/api/character?page=${page}`)
+        axios.get(`https://rickandmortyapi.com/api/character?page=${page}${filter ? `&${filter}` : ""}`)
           .then((res) => res.data),
+      throwOnError: false,
     },
   );
   
-  return useMemo(() => data?.results || [], [data]);
-}
+  return useMemo(() => ({
+    results: data?.results || [],
+    noResults: isRefetching ? false : !!filter && data?.results?.length === 0
+  }), [data, isRefetching, filter]);
+};
